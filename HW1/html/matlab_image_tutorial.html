@@ -1,0 +1,1133 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>matlab_image_tutorial</title><meta name="generator" content="MATLAB 8.4"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2016-01-23"><meta name="DC.source" content="matlab_image_tutorial.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Computer Vision (&amp; Image Processing) with Matlab  %%</a></li><li><a href="#3">Read in an image</a></li><li><a href="#4">Note that the image is class UINT8 rather than normal DOUBLEs</a></li><li><a href="#5">Get the size of the image</a></li><li><a href="#6">Display the image with imshow</a></li><li><a href="#8">(Check out 'imagesc' as well)</a></li><li><a href="#9">Convert the rgb image to a grayscale image</a></li><li><a href="#10">NOTE: See other conversions under 'images' toolbox, 'help images'</a></li><li><a href="#11">Display as another image in a new figure</a></li><li><a href="#12">on figure handles</a></li><li><a href="#13">Close the second figure and display both images</a></li><li><a href="#14">in one figure using subplot</a></li><li><a href="#15">Want to see the histogram of the image</a></li><li><a href="#16">Threshold the image at a given level</a></li><li><a href="#17">Display the thresholded image</a></li><li><a href="#18">Second method of doing thresholding: Using matrix computations</a></li><li><a href="#19">Again display the image</a></li><li><a href="#20">Let's save our thresholded image in a file</a></li><li><a href="#21">I want to see the saved image without explicitly using imread</a></li><li><a href="#22">Want to convolve the gray level image with the gaussian</a></li><li><a href="#23">"Printing" the figure to a jpeg image</a></li><li><a href="#24">Resizing the image</a></li><li><a href="#25">Displaying plots on top of images using 'hold'</a></li><li><a href="#26">Select a subimage, both in color and grayscale:</a></li><li><a href="#27">Extra</a></li><li><a href="#29">X - Column,  Y - Row</a></li><li><a href="#30">Getting coordinates or image values</a></li><li><a href="#31">A few more things:</a></li></ul></div><pre class="codeinput">echo <span class="string">off</span>
+clear <span class="string">all</span>
+home
+echo <span class="string">on</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+</pre><pre class="codeoutput">
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Computer Vision (&amp; Image Processing) with Matlab  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This tutorial is provided by Martial Hebert at CMU   %
+% with minor changes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%% Read in an image 
+%
+im1 = imread('fruits.jpg');  %% Give full path name in the string
+</pre><h2>Computer Vision (&amp; Image Processing) with Matlab  %%<a name="2"></a></h2><pre class="codeinput"><span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+<span class="comment">% This tutorial is provided by Martial Hebert at CMU   %</span>
+<span class="comment">% with minor changes</span>
+<span class="comment">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span>
+
+<span class="comment">%</span>
+</pre><h2>Read in an image<a name="3"></a></h2><pre class="codeinput">im1 = imread(<span class="string">'fruits.jpg'</span>);  <span class="comment">%% Give full path name in the string</span>
+
+pause
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause
+
+%
+%% Note that the image is class UINT8 rather than normal DOUBLEs
+%
+class(im1)
+</pre><h2>Note that the image is class UINT8 rather than normal DOUBLEs<a name="4"></a></h2><pre class="codeinput">class(im1)
+
+pause;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+ans =
+
+uint8
+
+
+pause;
+
+%
+%% Get the size of the image
+%
+imSize = size(im1)
+</pre><h2>Get the size of the image<a name="5"></a></h2><pre class="codeinput">imSize = size(im1)
+
+pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+imSize =
+
+   480   512     3
+
+		      
+pause;  
+home;
+
+%
+%% Display the image with imshow
+%%
+%% (Check out 'imagesc' as well)
+%
+imshow(im1);  %% SEE 'help imshow'
+</pre><h2>Display the image with imshow<a name="6"></a></h2><h2>(Check out 'imagesc' as well)<a name="8"></a></h2><pre class="codeinput">imshow(im1);  <span class="comment">%% SEE 'help imshow'</span>
+
+pause
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause
+
+%
+%% Convert the rgb image to a grayscale image 
+%% NOTE: See other conversions under 'images' toolbox, 'help images'
+%
+grIm1 = rgb2gray(im1);
+</pre><h2>Convert the rgb image to a grayscale image<a name="9"></a></h2><h2>NOTE: See other conversions under 'images' toolbox, 'help images'<a name="10"></a></h2><pre class="codeinput">grIm1 = rgb2gray(im1);
+
+pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+home;
+
+%
+%% Display as another image in a new figure
+%
+figure(2), imshow(grIm1);  %% NOTE: See 'help figure' for more options
+</pre><h2>Display as another image in a new figure<a name="11"></a></h2><pre class="codeinput">figure(2), imshow(grIm1);  <span class="comment">%% NOTE: See 'help figure' for more options</span>
+</pre><pre class="codeoutput">                           %% on figure handles
+pause;
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_01.png" alt=""> <h2>on figure handles<a name="12"></a></h2><pre class="codeinput">pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">home;
+
+%
+%% Close the second figure and display both images
+%% in one figure using subplot
+%
+%  - subplot(rows, cols, current)
+%
+close(2)
+</pre><h2>Close the second figure and display both images<a name="13"></a></h2><h2>in one figure using subplot<a name="14"></a></h2><pre>- subplot(rows, cols, current)</pre><pre class="codeinput">close(2)
+figure(1)
+subplot(1,2,1) <span class="comment">% 'subplot 121' is also legal syntax</span>
+imshow(im1)
+subplot <span class="string">122</span>, imshow(grIm1);
+
+pause
+home
+
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">figure(1)
+subplot(1,2,1) % 'subplot 121' is also legal syntax
+imshow(im1)
+subplot 122, imshow(grIm1);
+
+pause
+home
+
+%
+%% Want to see the histogram of the image
+%
+clf % clear the current figure
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_02.png" alt=""> <h2>Want to see the histogram of the image<a name="15"></a></h2><pre class="codeinput">clf <span class="comment">% clear the current figure</span>
+imhist(grIm1); <span class="comment">%Check figure</span>
+
+pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">imhist(grIm1); %Check figure  
+
+pause;
+home;
+
+%
+%% Threshold the image at a given level
+%
+thresh = 100;
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_03.png" alt=""> <h2>Threshold the image at a given level<a name="16"></a></h2><pre class="codeinput">thresh = 100;
+
+pause;
+
+<span class="comment">%</span>
+<span class="comment">% First, the wrong way to do this using loops (bad programming style in Matlab)</span>
+<span class="comment">%</span>
+<span class="comment">% [rows, cols] = size(grIm1);</span>
+<span class="comment">%</span>
+<span class="comment">% tIm1 = grIm1;</span>
+<span class="comment">%</span>
+<span class="comment">% for i = 1:rows, %%  for i = 1:1:rows (increments can be negative too)</span>
+<span class="comment">%   for j = 1:cols,</span>
+<span class="comment">%     if (grIm1(i,j)&lt;=thresh),</span>
+<span class="comment">%       tIm1(i,j) = 0;</span>
+<span class="comment">%     end</span>
+<span class="comment">%   end</span>
+<span class="comment">% end</span>
+<span class="comment">%</span>
+pause
+
+echo <span class="string">off</span>
+disp(<span class="string">'Working...'</span>)
+[rows, cols] = size(grIm1);
+
+tIm1 = grIm1;
+
+<span class="keyword">for</span> i = 1:rows, <span class="comment">%%  for i = 1:1:rows (increments can be negative too)</span>
+  <span class="keyword">for</span> j = 1:cols,
+    <span class="keyword">if</span> (grIm1(i,j)&lt;=thresh),
+      tIm1(i,j) = 0;
+    <span class="keyword">end</span>
+  <span class="keyword">end</span>
+<span class="keyword">end</span>
+echo <span class="string">on</span>
+
+pause;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+
+%
+% First, the wrong way to do this using loops (bad programming style in Matlab)
+%
+% [rows, cols] = size(grIm1);
+%
+% tIm1 = grIm1;
+%
+% for i = 1:rows, %%  for i = 1:1:rows (increments can be negative too)
+%   for j = 1:cols,
+%     if (grIm1(i,j)&lt;=thresh),
+%       tIm1(i,j) = 0;
+%     end
+%   end
+% end
+%
+pause
+
+echo off
+Working...
+
+pause;
+
+%
+%% Display the thresholded image
+%
+imshow(tIm1); %Check figure
+</pre><h2>Display the thresholded image<a name="17"></a></h2><pre class="codeinput">imshow(tIm1); <span class="comment">%Check figure</span>
+
+pause;
+
+clear <span class="string">tIm1</span>;
+
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+
+clear tIm1;
+
+home;
+
+%
+%% Second method of doing thresholding: Using matrix computations
+%
+tIm1 = grIm1;
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_04.png" alt=""> <h2>Second method of doing thresholding: Using matrix computations<a name="18"></a></h2><pre class="codeinput">tIm1 = grIm1;
+
+index = find(grIm1&lt;=thresh);  <span class="comment">%% SEE 'help find'</span>
+
+pause;
+
+tIm1(index) =  0;
+
+pause;
+
+imshow(tIm1);
+
+pause;
+
+clear <span class="string">tIm1</span>;
+
+home;
+
+<span class="comment">%%%%%% Third method of doing thresholding: Composite statement</span>
+<span class="comment">%</span>
+<span class="comment">% tImage = (grIm1&gt;thresh) .* (grIm1); %% use of pointwise</span>
+<span class="comment">%                                     % multiplication</span>
+pause;
+
+<span class="comment">%</span>
+<span class="comment">%%MAJOR PAIN 1: The arithmetic operations are not defined over uint8</span>
+<span class="comment">% variables so first convert them into double</span>
+<span class="comment">%</span>
+
+tIm1 = double(grIm1&gt;thresh).*double(grIm1);
+
+pause;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+index = find(grIm1&lt;=thresh);  %% SEE 'help find'
+
+pause;
+
+tIm1(index) =  0;
+
+pause;
+
+imshow(tIm1);
+
+pause;
+
+clear tIm1;
+
+home;
+
+%%%%%% Third method of doing thresholding: Composite statement
+%
+% tImage = (grIm1&gt;thresh) .* (grIm1); %% use of pointwise
+%                                     % multiplication 
+pause;
+
+%
+%%MAJOR PAIN 1: The arithmetic operations are not defined over uint8
+% variables so first convert them into double
+%
+tIm1 = double(grIm1&gt;thresh).*double(grIm1);  
+
+pause;
+
+%
+%% Again display the image
+%
+imshow(tIm1); %Check Figure
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_05.png" alt=""> <h2>Again display the image<a name="19"></a></h2><pre class="codeinput">imshow(tIm1); <span class="comment">%Check Figure</span>
+
+<span class="comment">%</span>
+<span class="comment">% Oops!! Doesn't look like earlier thresholded images...</span>
+<span class="comment">% WHAT happened !!</span>
+<span class="comment">%</span>
+pause;
+
+<span class="comment">%</span>
+<span class="comment">% MAJOR PAIN 2: The image display assumes the doubles in an image to be</span>
+<span class="comment">% between 0 and 1. If it is not, it chops the intensities outside</span>
+<span class="comment">% this range... (This causes bigger problems with 'imagesc')</span>
+<span class="comment">%</span>
+<span class="comment">% So, try casting the result to unit8 before displaying</span>
+<span class="comment">%</span>
+tIm1 = uint8(tIm1);
+
+pause;
+
+imshow( tIm1 ); <span class="comment">%Check Figure</span>
+
+pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+%
+% Oops!! Doesn't look like earlier thresholded images... 
+% WHAT happened !!
+%
+pause;
+
+%
+% MAJOR PAIN 2: The image display assumes the doubles in an image to be
+% between 0 and 1. If it is not, it chops the intensities outside
+% this range... (This causes bigger problems with 'imagesc') 
+%
+% So, try casting the result to unit8 before displaying
+%
+tIm1 = uint8(tIm1);
+
+pause;
+
+imshow( tIm1 ); %Check Figure
+
+pause;
+home;
+
+%
+%% Let's save our thresholded image in a file
+%
+imwrite(tIm1, 'threshImage.jpg');  %% Saved as 'jpg'
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_06.png" alt=""> <h2>Let's save our thresholded image in a file<a name="20"></a></h2><pre class="codeinput">imwrite(tIm1, <span class="string">'threshImage.jpg'</span>);  <span class="comment">%% Saved as 'jpg'</span>
+
+pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+home;
+
+%
+%% I want to see the saved image without explicitly using imread
+%
+imshow('threshImage.jpg'); %Check Figure
+</pre><h2>I want to see the saved image without explicitly using imread<a name="21"></a></h2><pre class="codeinput">imshow(<span class="string">'threshImage.jpg'</span>); <span class="comment">%Check Figure</span>
+
+pause;
+home;
+
+<span class="comment">%</span>
+<span class="comment">% A very useful function: fspecial</span>
+<span class="comment">%</span>
+<span class="comment">% Make a gaussian:</span>
+<span class="comment">%</span>
+gaussFilt = fspecial(<span class="string">'gaussian'</span>,31,4); <span class="comment">% SEE 'help fspecial'</span>
+
+pause;
+
+<span class="comment">%</span>
+<span class="comment">% Display it as a 3D surface:</span>
+<span class="comment">%</span>
+surf(gaussFilt);  <span class="comment">%% SEE 'help surf' or 'mesh' %Check Figure</span>
+
+pause;
+home;
+
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+home;
+
+%
+% A very useful function: fspecial
+%
+% Make a gaussian:
+%
+gaussFilt = fspecial('gaussian',31,4); % SEE 'help fspecial' 
+
+pause;
+
+%
+% Display it as a 3D surface:
+%
+surf(gaussFilt);  %% SEE 'help surf' or 'mesh' %Check Figure
+
+pause;
+home;
+
+%
+%% Want to convolve the gray level image with the gaussian 
+%  'imfilter' performs 2D convolution and has nice 
+%  boundary condition handling.
+%
+convIm = imfilter(grIm1, gaussFilt, 'symmetric'); 
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_07.png" alt=""> <h2>Want to convolve the gray level image with the gaussian<a name="22"></a></h2><pre>'imfilter' performs 2D convolution and has nice
+boundary condition handling.</pre><pre class="codeinput">convIm = imfilter(grIm1, gaussFilt, <span class="string">'symmetric'</span>);
+
+pause;
+
+<span class="comment">%</span>
+<span class="comment">% Now, show everything together on one plot, with titles:</span>
+<span class="comment">% Notice the blur after convolution</span>
+subplot <span class="string">131</span>, imshow(grIm1); title(<span class="string">'Grayscale Image'</span>)
+subplot <span class="string">132</span>, surf(gaussFilt); title(<span class="string">'Gaussian Filter'</span>)
+subplot <span class="string">133</span>, imshow(convIm); title(<span class="string">'Gaussian Filtered Image'</span>) <span class="comment">%Check Figure</span>
+
+pause;
+home
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+pause;
+
+%
+% Now, show everything together on one plot, with titles:
+% Notice the blur after convolution
+subplot 131, imshow(grIm1); title('Grayscale Image')
+subplot 132, surf(gaussFilt); title('Gaussian Filter')
+subplot 133, imshow(convIm); title('Gaussian Filtered Image') %Check Figure
+
+pause;
+home
+
+%
+%% "Printing" the figure to a jpeg image
+%
+%  arguments: figure 1, jpeg quality 90, 150dpi resolution, filename
+%
+% print(1, '-djpeg90', '-r150', 'convolution.jpg');
+pause;
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_08.png" alt=""> <h2>"Printing" the figure to a jpeg image<a name="23"></a></h2><pre>arguments: figure 1, jpeg quality 90, 150dpi resolution, filename</pre><p>print(1, '-djpeg90', '-r150', 'convolution.jpg');</p><pre class="codeinput">pause;
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">home;
+
+%
+%% Resizing the image
+%
+clf;
+</pre><h2>Resizing the image<a name="24"></a></h2><pre class="codeinput">clf;
+imshow(im1) <span class="comment">%Displaying the original image again %Check Figure</span>
+pause;
+imResized = imresize(im1,1.5,<span class="string">'bicubic'</span>); <span class="comment">%Resize the image to 1.5times</span>
+                                         <span class="comment">%using bicubic interpolation</span>
+imshow(imResized) <span class="comment">%Displaying the resized image %Check Figure</span>
+pause;
+home;
+<span class="comment">%</span>
+</pre><pre class="codeoutput">imshow(im1) %Displaying the original image again %Check Figure
+pause;
+imResized = imresize(im1,1.5,'bicubic'); %Resize the image to 1.5times 
+                                         %using bicubic interpolation
+imshow(imResized) %Displaying the resized image %Check Figure
+Warning: Image is too big to fit on screen; displaying at 67% 
+pause;
+home;
+%
+%% Displaying plots on top of images using 'hold'
+%
+clf
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_09.png" alt=""> <h2>Displaying plots on top of images using 'hold'<a name="25"></a></h2><pre class="codeinput">clf
+imshow(grIm1)
+hold <span class="string">on</span>
+x_pts = cols*rand(1,100);
+y_pts = rows*rand(1,100);
+plot(x_pts, y_pts, <span class="string">'rx'</span>, <span class="string">'MarkerSize'</span>, 16) <span class="comment">%Check Figure</span>
+hold <span class="string">off</span>
+
+pause
+home;
+
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">imshow(grIm1)
+hold on
+x_pts = cols*rand(1,100);
+y_pts = rows*rand(1,100);
+plot(x_pts, y_pts, 'rx', 'MarkerSize', 16) %Check Figure
+hold off
+
+pause
+home;
+
+%
+%% Select a subimage, both in color and grayscale:
+%
+subIm=grIm1(100:225,50:175);
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_10.png" alt=""> <h2>Select a subimage, both in color and grayscale:<a name="26"></a></h2><pre class="codeinput">subIm=grIm1(100:225,50:175);
+subIm_col = im1(100:225,50:175,:);  <span class="comment">% note the extra ':'</span>
+
+pause;
+
+subplot <span class="string">121</span>, imshow(subIm);
+subplot <span class="string">122</span>, imshow(subIm_col); <span class="comment">%Check Figure</span>
+
+pause;
+home;
+
+<span class="comment">%</span>
+<span class="comment">% Want to see the intensity plot of a single row in the Image</span>
+<span class="comment">%</span>
+line = subIm(100, :);
+
+pause;
+
+clf
+plot(line); <span class="comment">%% SEE 'help plot' and 'help plot3' %Check Figure</span>
+
+pause;
+home;
+</pre><pre class="codeoutput">subIm_col = im1(100:225,50:175,:);  % note the extra ':'
+
+pause;
+
+subplot 121, imshow(subIm);
+subplot 122, imshow(subIm_col); %Check Figure
+
+pause;
+home;
+
+%
+% Want to see the intensity plot of a single row in the Image
+%
+line = subIm(100, :);
+
+pause;
+
+clf
+plot(line); %% SEE 'help plot' and 'help plot3' %Check Figure
+
+pause;
+home;
+
+%% Extra
+%
+% Check functions 'imrotate' and 'imtransform'
+%
+pause;
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_11.png" alt=""> <h2>Extra<a name="27"></a></h2><p>Check functions 'imrotate' and 'imtransform'</p><pre class="codeinput">pause;
+home;
+<span class="comment">%</span>
+</pre><pre class="codeoutput">home;
+%
+%% 
+%%%%%%% MAJOR PAIN 3: THE COORDINATE SYSTEM IN MATLAB (X,Y)
+%
+%% X - Column,  Y - Row
+%
+%  View pixel information with 'pixval'
+imshow(grIm1);
+</pre><pre class="codeinput"><span class="comment">%%%%%%% MAJOR PAIN 3: THE COORDINATE SYSTEM IN MATLAB (X,Y)</span>
+<span class="comment">%</span>
+</pre><h2>X - Column,  Y - Row<a name="29"></a></h2><pre>View pixel information with 'pixval'</pre><pre class="codeinput">imshow(grIm1);
+axis <span class="string">on</span>
+<span class="comment">% pixval;</span>
+impixelinfo;
+
+pause
+home;
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">axis on
+% pixval;
+impixelinfo;
+
+pause 
+home;
+
+%
+%% Getting coordinates or image values
+%
+%  - 'ginput' gets coordinates selected with the mouse - IN X/Y!!
+%  - 'impixel' can return values and/or coordinates (in ROW/COL)
+%    using the mouse or for specified locations
+%
+[x,y] = ginput(1)
+</pre><img vspace="5" hspace="5" src="matlab_image_tutorial_12.png" alt=""> <h2>Getting coordinates or image values<a name="30"></a></h2><pre>- 'ginput' gets coordinates selected with the mouse - IN X/Y!!
+- 'impixel' can return values and/or coordinates (in ROW/COL)
+  using the mouse or for specified locations</pre><pre class="codeinput">[x,y] = ginput(1)
+
+pause
+
+[c, r, val] = impixel(grIm1)
+
+
+<span class="comment">%</span>
+</pre><pre class="codeoutput">
+x =
+
+   -60
+
+
+y =
+
+   517
+
+
+pause
+
+[c, r, val] = impixel(grIm1)
+</pre><pre class="codeoutput error">Error using getpts (line 173)
+Interruption during mouse point selection.
+
+Error in impixel&gt;parse_inputs (line 199)
+        [xi,yi] = getpts(ancestor(h,'axes'));
+
+Error in impixel (line 76)
+[a,cm,xi,yi,x,y] = parse_inputs(varargin{:});
+
+Error in matlab_image_tutorial (line 358)
+[c, r, val] = impixel(grIm1)
+</pre><h2>A few more things:<a name="31"></a></h2><pre class="language-matlab">- Another image <span class="string">display</span> <span class="string">command</span> <span class="string">you</span> <span class="string">might</span> <span class="string">want</span> <span class="string">to</span> <span class="string">try:</span> <span class="string">'imagesc'</span>
+- Image axes
+- Grids
+- Colormaps
+- the Figure <span class="string">toolbar</span>
+</pre><pre class="codeinput">clf
+imagesc(grIm1)
+
+pause
+
+axis <span class="string">image</span>
+
+pause
+
+grid <span class="string">on</span>
+
+pause
+
+colormap(<span class="string">'default'</span>)
+
+pause;
+home;
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+echo off
+clear all
+home
+echo on
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Computer Vision (& Image Processing) with Matlab  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This tutorial is provided by Martial Hebert at CMU   %
+% with minor changes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%% Read in an image 
+%
+im1 = imread('fruits.jpg');  %% Give full path name in the string
+
+pause
+
+%
+%% Note that the image is class UINT8 rather than normal DOUBLEs
+%
+
+class(im1)
+
+pause;
+
+%
+%% Get the size of the image
+%
+imSize = size(im1)
+		      
+pause;  
+home;
+
+%
+%% Display the image with imshow
+%%
+%% (Check out 'imagesc' as well)
+%
+imshow(im1);  %% SEE 'help imshow'
+
+pause
+
+%
+%% Convert the rgb image to a grayscale image 
+%% NOTE: See other conversions under 'images' toolbox, 'help images'
+%
+grIm1 = rgb2gray(im1);
+
+pause;
+home;
+
+%
+%% Display as another image in a new figure
+%
+figure(2), imshow(grIm1);  %% NOTE: See 'help figure' for more options
+                           %% on figure handles
+
+pause;
+home;
+
+%
+%% Close the second figure and display both images
+%% in one figure using subplot
+%
+%  - subplot(rows, cols, current)
+%
+close(2)
+figure(1)
+subplot(1,2,1) % 'subplot 121' is also legal syntax
+imshow(im1)
+subplot 122, imshow(grIm1);
+
+pause
+home
+
+
+%
+%% Want to see the histogram of the image
+%
+
+clf % clear the current figure
+imhist(grIm1); %Check figure  
+
+pause;
+home;
+
+%
+%% Threshold the image at a given level
+%
+thresh = 100;
+
+pause;
+
+%
+% First, the wrong way to do this using loops (bad programming style in Matlab)
+%
+% [rows, cols] = size(grIm1);
+%
+% tIm1 = grIm1;
+%
+% for i = 1:rows, %%  for i = 1:1:rows (increments can be negative too)
+%   for j = 1:cols,
+%     if (grIm1(i,j)<=thresh),
+%       tIm1(i,j) = 0;
+%     end
+%   end
+% end
+%
+pause
+
+echo off
+disp('Working...')
+[rows, cols] = size(grIm1);
+
+tIm1 = grIm1;
+
+for i = 1:rows, %%  for i = 1:1:rows (increments can be negative too)
+  for j = 1:cols,
+    if (grIm1(i,j)<=thresh),
+      tIm1(i,j) = 0;
+    end
+  end
+end
+echo on
+
+pause;
+
+%
+%% Display the thresholded image
+%
+imshow(tIm1); %Check figure
+
+pause;
+
+clear tIm1;
+
+home;
+
+%
+%% Second method of doing thresholding: Using matrix computations
+%
+tIm1 = grIm1;
+
+index = find(grIm1<=thresh);  %% SEE 'help find'
+
+pause;
+
+tIm1(index) =  0;
+
+pause;
+
+imshow(tIm1);
+
+pause;
+
+clear tIm1;
+
+home;
+
+%%%%%% Third method of doing thresholding: Composite statement
+%
+% tImage = (grIm1>thresh) .* (grIm1); %% use of pointwise
+%                                     % multiplication 
+pause;
+
+%
+%%MAJOR PAIN 1: The arithmetic operations are not defined over uint8
+% variables so first convert them into double
+%
+
+tIm1 = double(grIm1>thresh).*double(grIm1);  
+
+pause;
+
+%
+%% Again display the image
+%
+imshow(tIm1); %Check Figure
+
+%
+% Oops!! Doesn't look like earlier thresholded images... 
+% WHAT happened !!
+%
+pause;
+
+%
+% MAJOR PAIN 2: The image display assumes the doubles in an image to be
+% between 0 and 1. If it is not, it chops the intensities outside
+% this range... (This causes bigger problems with 'imagesc') 
+%
+% So, try casting the result to unit8 before displaying
+%
+tIm1 = uint8(tIm1);
+
+pause;
+
+imshow( tIm1 ); %Check Figure
+
+pause;
+home;
+
+%
+%% Let's save our thresholded image in a file
+%
+imwrite(tIm1, 'threshImage.jpg');  %% Saved as 'jpg'
+
+pause;
+home;
+
+%
+%% I want to see the saved image without explicitly using imread
+%
+imshow('threshImage.jpg'); %Check Figure
+
+pause;
+home;
+
+%
+% A very useful function: fspecial
+%
+% Make a gaussian:
+%
+gaussFilt = fspecial('gaussian',31,4); % SEE 'help fspecial' 
+
+pause;
+
+%
+% Display it as a 3D surface:
+%
+surf(gaussFilt);  %% SEE 'help surf' or 'mesh' %Check Figure
+
+pause;
+home;
+
+
+%
+%% Want to convolve the gray level image with the gaussian 
+%  'imfilter' performs 2D convolution and has nice 
+%  boundary condition handling.
+%
+convIm = imfilter(grIm1, gaussFilt, 'symmetric'); 
+
+pause;
+
+%
+% Now, show everything together on one plot, with titles:
+% Notice the blur after convolution
+subplot 131, imshow(grIm1); title('Grayscale Image')
+subplot 132, surf(gaussFilt); title('Gaussian Filter')
+subplot 133, imshow(convIm); title('Gaussian Filtered Image') %Check Figure
+
+pause;
+home
+
+%
+%% "Printing" the figure to a jpeg image
+%
+%  arguments: figure 1, jpeg quality 90, 150dpi resolution, filename
+%
+% print(1, '-djpeg90', '-r150', 'convolution.jpg');
+
+pause;
+home;
+
+%
+%% Resizing the image
+%
+clf;
+imshow(im1) %Displaying the original image again %Check Figure
+pause;
+imResized = imresize(im1,1.5,'bicubic'); %Resize the image to 1.5times 
+                                         %using bicubic interpolation
+imshow(imResized) %Displaying the resized image %Check Figure
+pause;
+home;
+%
+%% Displaying plots on top of images using 'hold'
+%
+
+clf
+imshow(grIm1)
+hold on
+x_pts = cols*rand(1,100);
+y_pts = rows*rand(1,100);
+plot(x_pts, y_pts, 'rx', 'MarkerSize', 16) %Check Figure
+hold off
+
+pause
+home;
+
+
+%
+%% Select a subimage, both in color and grayscale:
+%
+subIm=grIm1(100:225,50:175);
+subIm_col = im1(100:225,50:175,:);  % note the extra ':'
+
+pause;
+
+subplot 121, imshow(subIm);
+subplot 122, imshow(subIm_col); %Check Figure
+
+pause;
+home;
+
+%
+% Want to see the intensity plot of a single row in the Image
+%
+line = subIm(100, :);
+
+pause;
+
+clf
+plot(line); %% SEE 'help plot' and 'help plot3' %Check Figure
+
+pause;
+home;
+
+%% Extra
+%
+% Check functions 'imrotate' and 'imtransform'
+%
+
+pause;
+home;
+%
+%% 
+%%%%%%% MAJOR PAIN 3: THE COORDINATE SYSTEM IN MATLAB (X,Y)
+%
+%% X - Column,  Y - Row
+%
+%  View pixel information with 'pixval'
+
+imshow(grIm1);
+axis on
+% pixval;
+impixelinfo;
+
+pause 
+home;
+
+%
+%% Getting coordinates or image values
+%
+%  - 'ginput' gets coordinates selected with the mouse - IN X/Y!!
+%  - 'impixel' can return values and/or coordinates (in ROW/COL)
+%    using the mouse or for specified locations
+%
+
+[x,y] = ginput(1)
+
+pause
+
+[c, r, val] = impixel(grIm1)
+
+
+%
+%% A few more things:
+%
+%   - Another image display command you might want to try: 'imagesc'
+%   - Image axes
+%   - Grids
+%   - Colormaps
+%   - the Figure toolbar
+%
+
+clf
+imagesc(grIm1)
+
+pause
+
+axis image
+
+pause
+
+grid on
+
+pause
+
+colormap('default')
+
+pause;
+home;
+
+
+##### SOURCE END #####
+--></body></html>
